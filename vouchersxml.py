@@ -13,10 +13,105 @@ def convert_row(row):
                     <NARRATION>{escape(row.naration)}</NARRATION>
                     <REFERENCE>{escape(row.supplier_invoice_no)}</REFERENCE>
                     <VOUCHERNUMBER></VOUCHERNUMBER>
+										<PARTYNAME>{escape(row.cr_ledger_a)}</PARTYNAME>
 """
 
-    if row.dr_ledger_a != '-':
-        xml_row += f"""
+    if row.voucher_type == 'Receipt' or row.voucher_type == 'Purchase' or row.voucher_type == 'Contra' or row.voucher_type == 'Credit Note':
+
+        if row.dr_ledger_a != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.dr_ledger_a)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                        <AMOUNT>{row.dr_amount_a}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+
+        if row.dr_ledger_b != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.dr_ledger_b)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                        <AMOUNT>{row.dr_amount_b}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+
+        if row.dr_ledger_c != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.dr_ledger_c)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                        <AMOUNT>{row.dr_amount_c}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+
+        if row.dr_ledger_d != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.dr_ledger_d)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                        <AMOUNT>{row.dr_amount_d}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+
+        if row.dr_ledger_e != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.dr_ledger_e)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
+                        <AMOUNT>{row.dr_amount_e}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+    
+        if row.cr_ledger_a != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.cr_ledger_a)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                        <AMOUNT>-{row.cr_amount_a}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+    
+        if row.cr_ledger_b != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.cr_ledger_b)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                        <AMOUNT>-{row.cr_amount_b}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+    
+        if row.cr_ledger_c != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.cr_ledger_c)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                        <AMOUNT>-{row.cr_amount_c}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+    
+        if row.cr_ledger_d != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.cr_ledger_d)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                        <AMOUNT>-{row.cr_amount_d}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+    
+        if row.cr_ledger_e != '-':
+            xml_row += f"""
+                    <ALLLEDGERENTRIES.LIST>
+                        <LEDGERNAME>{escape(row.cr_ledger_e)}</LEDGERNAME>
+                        <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
+                        <AMOUNT>-{row.cr_amount_e}</AMOUNT>
+                    </ALLLEDGERENTRIES.LIST>
+"""
+
+    elif row.voucher_type == 'Sales' or row.voucher_type == 'Payment' or row.voucher_type == 'Journal' or row.voucher_type == 'Debit Note':
+
+        if row.dr_ledger_a != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_a)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
@@ -24,8 +119,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-    if row.dr_ledger_b != '-':
-        xml_row += f"""
+        if row.dr_ledger_b != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_b)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
@@ -33,8 +128,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-    if row.dr_ledger_c != '-':
-        xml_row += f"""
+        if row.dr_ledger_c != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_c)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
@@ -42,8 +137,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-    if row.dr_ledger_d != '-':
-        xml_row += f"""
+        if row.dr_ledger_d != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_d)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
@@ -51,8 +146,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
 
-    if row.dr_ledger_e != '-':
-        xml_row += f"""
+        if row.dr_ledger_e != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.dr_ledger_e)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>Yes</ISDEEMEDPOSITIVE>
@@ -60,8 +155,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
     
-    if row.cr_ledger_a != '-':
-        xml_row += f"""
+        if row.cr_ledger_a != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_a)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
@@ -69,8 +164,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
     
-    if row.cr_ledger_b != '-':
-        xml_row += f"""
+        if row.cr_ledger_b != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_b)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
@@ -78,8 +173,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
     
-    if row.cr_ledger_c != '-':
-        xml_row += f"""
+        if row.cr_ledger_c != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_c)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
@@ -87,8 +182,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
     
-    if row.cr_ledger_d != '-':
-        xml_row += f"""
+        if row.cr_ledger_d != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_d)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
@@ -96,8 +191,8 @@ def convert_row(row):
                     </ALLLEDGERENTRIES.LIST>
 """
     
-    if row.cr_ledger_e != '-':
-        xml_row += f"""
+        if row.cr_ledger_e != '-':
+            xml_row += f"""
                     <ALLLEDGERENTRIES.LIST>
                         <LEDGERNAME>{escape(row.cr_ledger_e)}</LEDGERNAME>
                         <ISDEEMEDPOSITIVE>No</ISDEEMEDPOSITIVE>
